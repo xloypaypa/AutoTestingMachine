@@ -2,11 +2,15 @@ package compiler;
 
 import java.io.File;
 
+import runner.Runner;
+
 public interface Compile {
 	
 	public void setUp();
-	public String runCode(File code);
+	public String compileCode(File code);
 	public boolean isThisCompiler(String name);
-	public String getOutputPath();
+	public File getRunableFile(File code);
+	public Runner getRunner();
+	public String getName();
 	
 }

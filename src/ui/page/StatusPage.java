@@ -1,20 +1,21 @@
 package ui.page;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 
-import javax.swing.JButton;
-
-import ui.UI;
+import logic.CodePath;
+import logic.Logic;
 import ui.tool.StatusTable;
 
 public class StatusPage extends AbstractPage {
 	
 	StatusTable table;
-	JButton back;
+	Logic logic;
+	boolean flag;
 	
 	public StatusPage() {
 		super("status");
+		table=new StatusTable();
+		show.add(table.getTool());
 	}
 
 	@Override
@@ -25,22 +26,45 @@ public class StatusPage extends AbstractPage {
 
 	@Override
 	public void loadItem() {
+		show.remove(table.getTool());
 		table=new StatusTable();
 		table.setBounds(10, 10, 700, 500);
-		table.getValue();
+		table.setValue(logic,flag);
 		show.add(table.getTool());
-		
-		back=new JButton();
-		back.setBounds(700, 550, 100, 20);
-		back.setText("back");
-		back.addActionListener(new ActionListener() {
-			
+		repaint();
+	}
+	
+	public void runLogic(){
+		logic.start();
+		new Thread(){
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				UI.showPage("choice");
+			public void run(){
+				flag=true;
+				CodePath past=new CodePath();
+				while (logic.isAlive()){
+					if (!past.path.equals(logic.getNowCode().path)){
+						updateData();
+						past=new CodePath(logic.getNowCode());
+					}else if (!past.status.equals(logic.getNowCode().status)){
+						updateData();
+						past=new CodePath(logic.getNowCode());
+					}
+				}
+				JOptionPane.showMessageDialog(null,"running finish","message",JOptionPane.INFORMATION_MESSAGE);
+				flag=false;
+				updateData();
 			}
-		});
-		show.add(back);
+		}.start();
+	}
+
+	protected void updateData() {
+		loadItem();
+		repaint();
+		window.repaint();
+	}
+	
+	public void setLogic(Logic logic){
+		this.logic=logic;
 	}
 
 }

@@ -1,31 +1,22 @@
 package ui.tool;
 
-import java.util.Vector;
-
 import javax.swing.JComboBox;
+
+import compiler.CompileManager;
 
 public class LanguageChoice extends AbstractTool {
 	
-	static Vector<String> language=new Vector<>();
 	JComboBox<String> choice;
 	
 	public LanguageChoice() {
 		super("language");
 		choice=new JComboBox<>();
 		
-		for (int i=0;i<language.size();i++){
-			choice.addItem(language.get(i));
+		for (int i=0;i<CompileManager.getAllCompiler().size();i++){
+			choice.addItem(CompileManager.getAllCompiler().get(i));
 		}
 		
 		show.add(choice);
-	}
-	
-	public static void addLanguage(String language) {
-		LanguageChoice.language.addElement(language);
-	}
-	
-	public static void cleanLanguage() {
-		LanguageChoice.language.removeAllElements();
 	}
 	
 	public String getChoice() {
@@ -35,8 +26,8 @@ public class LanguageChoice extends AbstractTool {
 	@Override
 	public void repaint() {
 		choice.removeAllItems();
-		for (int i=0;i<language.size();i++){
-			choice.addItem(language.get(i));
+		for (int i=0;i<CompileManager.getAllCompiler().size();i++){
+			choice.addItem(CompileManager.getAllCompiler().get(i));
 		}
 		
 		choice.repaint();

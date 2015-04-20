@@ -6,8 +6,8 @@ public class Input extends AbstractTool {
 	
 	JTextField message;
 	
-	public Input() {
-		super("input");
+	public Input(String title) {
+		super(title);
 		message=new JTextField();
 		show.add(message);
 	}

@@ -1,12 +1,13 @@
-package compiler;
+package runner;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 public abstract class Runner extends Thread {
 	
+	String filePath;
 	Process code;
-	long timeLimit;
+	long timeLimit, usedTime;
 	String exitValue;
 	
 	@Override
@@ -25,10 +26,12 @@ public abstract class Runner extends Thread {
         };
         
 		code = codeStart();
+		usedTime=System.currentTimeMillis();
 		timer.schedule(tast, timeLimit);
 		
 		try {
 			code.waitFor();
+			usedTime=System.currentTimeMillis()-usedTime;
 			if (code.exitValue()==0){
 				setExitValue("ok");
 			}else{
@@ -36,6 +39,8 @@ public abstract class Runner extends Thread {
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+		} finally {
+			code.destroyForcibly();
 		}
 	}
 	
@@ -45,6 +50,14 @@ public abstract class Runner extends Thread {
 	
 	public String getExitValue(){
 		return this.exitValue;
+	}
+	
+	public long getUsedTime() {
+		return this.usedTime;
+	}
+	
+	public void setFile(String path){
+		this.filePath=path;
 	}
 	
 	private void setExitValue(String value){
