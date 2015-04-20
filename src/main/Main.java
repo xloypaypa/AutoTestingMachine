@@ -6,6 +6,7 @@ import compiler.LispCompiler;
 import logic.CodeCheckeLogic;
 import ui.UI;
 import ui.page.ChoicePage;
+import ui.page.StatusPage;
 import ui.tool.LanguageChoice;
 
 public class Main {
@@ -20,6 +21,7 @@ public class Main {
 		AbstractCompiler.setRunPath("E:/test_space/run_path");
 		
 		UI.addPage(new ChoicePage());
+		UI.addPage(new StatusPage());
 		UI.createWindow();
 		UI.showPage("choice");
 	}

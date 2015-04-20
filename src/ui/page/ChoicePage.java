@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 import logic.Logic;
+import ui.UI;
 import ui.tool.CodeChoice;
 import ui.tool.FileChoice;
 import ui.tool.FolderChoice;
@@ -40,6 +41,7 @@ public class ChoicePage extends AbstractPage {
 				for (int i=0;i<Logic.getCodesName().size();i++){
 					System.out.println(Logic.getCodesName().get(i)+" : "+Logic.getCodesReturn().get(i));
 				}
+				UI.showPage("status");
 			}
 		});
 		
