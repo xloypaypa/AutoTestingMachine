@@ -27,6 +27,17 @@ public abstract class CompilableCompiler extends AbstractCompiler {
 	protected abstract String compile(File code);
 	protected abstract File getCompiledFile(File code);
 	
+	protected static void drainInBackground(final InputStream is) {
+		new Thread(new Runnable() {
+			public void run() {
+				try {
+					while (is.read() >= 0);
+				} catch (IOException e) {
+				}
+			}
+		}).start();
+	}
+	
 	private void moveToFolder(File now, File aimPath) {
 		if (now.getAbsolutePath().equals(aimPath.getAbsolutePath()+"/"+now.getName())){
 			return ;

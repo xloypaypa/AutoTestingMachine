@@ -50,9 +50,9 @@ public class StatusPage extends AbstractPage {
 						past=new CodePath(logic.getNowCode());
 					}
 				}
-				JOptionPane.showMessageDialog(null,"running finish","message",JOptionPane.INFORMATION_MESSAGE);
 				flag=false;
 				updateData();
+				JOptionPane.showMessageDialog(null,"running finish","message",JOptionPane.INFORMATION_MESSAGE);
 			}
 		}.start();
 	}
