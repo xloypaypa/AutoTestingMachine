@@ -61,6 +61,10 @@ public class Logic extends Thread {
 			if (kids[i].isDirectory()) continue;
 			
 			runCode(kids[i].getAbsolutePath(), language, out, limit);
+			File file=new File(out);
+			while (file.exists()){
+				file.delete();
+			}
 		}
 	}
 	
